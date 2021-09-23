@@ -1,0 +1,47 @@
+//Command pins for stepper motor windings (A+, A-, B+, B-)
+#define ApPin 9
+#define AnPin 10
+#define BpPin 11
+#define BnPin 12
+
+char stepperPhase = 0; //Memorize which stepper motor coil to supply
+
+void setup() {
+  pinMode(ApPin, OUTPUT);
+  pinMode(AnPin, OUTPUT);
+  pinMode(BpPin, OUTPUT);
+  pinMode(BnPin, OUTPUT);
+
+}
+void loop() {
+  delay(1000);
+  //Update the stepping phase
+  stepperPhase = stepperPhase + 1;
+  if (stepperPhase > 3){ 
+    stepperPhase = 0;}                      
+  //Command the stepper motor coils accordingly
+  SwitchingStepperPhase();
+  } 
+void SwitchingStepperPhase(){
+  switch (stepperPhase) {
+  case 0: {                          ///2 turn on
+    digitalWrite(BnPin, LOW);
+    digitalWrite(ApPin, HIGH);
+    }
+  break;
+  case 1: {                          ///3 turn on
+    digitalWrite(ApPin, LOW);
+    digitalWrite(BpPin, HIGH);
+    }
+  break;
+  case 2: {                          ///4 turn on
+    digitalWrite(BpPin, LOW);
+    digitalWrite(AnPin, HIGH);
+    }
+  break;
+  case 3: {                          ///1 turn on
+    digitalWrite(AnPin, LOW);
+    digitalWrite(BnPin, HIGH);
+    }
+  }
+} 

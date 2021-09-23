@@ -1,0 +1,48 @@
+SSSSender 
+==================
+int pin =7;
+int n =0;
+void setup() {
+  // Setup the Serial at 9600 Baud 
+  pinMode(pin, INPUT); 
+  Serial.begin(9600); 
+  }
+
+  void loop() { 
+    n = digitalRead(7);
+    if(n == HIGH ){
+      Serial.println('1');
+    }
+    //Write the serial data 
+    delay(500); 
+  }
+
+
+
+
+=============== receiver 
+
+
+
+
+int pin1 =7;
+void setup() {
+  // Begin the Serial at 9600 Baud 
+  Serial.begin(9600); 
+    pinMode(pin1, OUTPUT); 
+  } 
+  void loop() {
+    if (Serial.available()) 
+    { 
+      char data = Serial.read();
+      //Read the serial data and store in var 
+      //Serial.println(data);
+      if( data == '1'){
+        digitalWrite(pin1, HIGH);
+      }
+      delay(500);
+       digitalWrite(pin1,LOW);
+      //Print data on Serial Monitor
+      } 
+  }
+  

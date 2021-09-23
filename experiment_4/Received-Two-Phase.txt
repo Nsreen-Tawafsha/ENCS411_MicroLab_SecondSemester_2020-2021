@@ -1,0 +1,49 @@
+// command pins for stepper motor windings (A+, A-, B+, B-)
+#define ApPin 9 
+#define AmPin 10 
+#define BpPin 11 
+#define BmPin 12 
+ 
+// activation period in µs 
+#define stepperPeriod 250000 // 0.25 s == 4 steps/s 
+ 
+// phases count 
+ 
+unsigned long stepperNextDate;         
+// Next rendez-vous in µs
+char stepperPhase = 0; // memorize which stepper motor coil to supply 
+
+void setup() {   
+  pinMode(ApPin,OUTPUT);
+  pinMode(AmPin,OUTPUT);   
+  pinMode(BpPin,OUTPUT); 
+  pinMode(BmPin,OUTPUT);    
+  unsigned long now = micros(); // initialize next rendezvous    
+  stepperNextDate = now + stepperPeriod; 
+} 
+ 
+void loop() {    
+  bool doStepper;   
+  do { // wait for the upcoming rendezvous      
+    long int now = micros();        
+    doStepper = (signed long)(now - stepperNextDate) >= 0;   
+  } while (!doStepper); 
+ 
+    if (doStepper) { // stepper motor processing    
+      // set the date of the next stepper rendezvous       
+      stepperNextDate += stepperPeriod;         // update the stepping phase        
+      stepperPhase = stepperPhase + 1;       
+      if (stepperPhase > 3)
+        stepperPhase = 0;         // command the stepper motor coils accordingly       
+      switch (stepperPhase) {            
+        case 0: { digitalWrite(BmPin,LOW); digitalWrite(ApPin,HIGH); digitalWrite(BpPin,HIGH); digitalWrite(AmPin,LOW); } 
+        break;            
+        case 1: { digitalWrite(ApPin,LOW); digitalWrite(BpPin,HIGH); digitalWrite(BmPin,LOW); digitalWrite(AmPin,HIGH); } 
+        break;            
+        case 2: { digitalWrite(BpPin,LOW); digitalWrite(AmPin,HIGH);digitalWrite(BmPin,HIGH); digitalWrite(ApPin,LOW); } 
+        break;            
+        case 3: { digitalWrite(AmPin,LOW); digitalWrite(BmPin,HIGH);digitalWrite(BpPin,LOW); digitalWrite(ApPin,HIGH); } 
+        break;        
+      } // switch    
+    } // doStepper
+} //loop() 

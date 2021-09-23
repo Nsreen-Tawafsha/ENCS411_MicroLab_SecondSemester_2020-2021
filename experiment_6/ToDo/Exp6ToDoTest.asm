@@ -1,0 +1,7 @@
+.MODEL SMALL 
+.STACK 100 
+.CODE 
+  INT 70H 
+  mov AH,4CH 
+  INT 21H 
+END
