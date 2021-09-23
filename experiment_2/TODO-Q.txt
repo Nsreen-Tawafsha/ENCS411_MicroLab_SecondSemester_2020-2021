@@ -1,0 +1,11 @@
+Write a code that control the speed of both motors depends on your last 2 numbers in your id(university id) 
+You must connect two motors work with the same speed as abovebut the direction for each one of them must be entered by user(in serial) F for forward, and B for backward S for stop. Each motor individually.
+
+Example. ?f your id 1161345 
+The speed of motors will be 45 
+And the direction will determined by user input.
+Submit by replying to this message before the day ends.
+
+Good luck.
+
+ 

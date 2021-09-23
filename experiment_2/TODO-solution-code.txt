@@ -1,0 +1,149 @@
+int speed=0;
+String dir1;
+String dir2;
+
+void setup(){
+  Serial.begin(9600); 
+  pinMode(10, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(8, OUTPUT);
+  
+  pinMode(3, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(5, OUTPUT);
+  
+  Serial.print("Enter the direction of the first motor then the direction of the second (F B for example):\n");
+}
+
+
+void loop() {  
+  if ( Serial.available()>0) {
+    speed=19;
+    dir1= Serial.readStringUntil(' ');
+    dir2=Serial.readStringUntil('\n');
+    Serial.print(dir1);
+    Serial.print(" ");
+    Serial.print(dir2);
+    Serial.print("\n");
+    
+    // if user select forward for the first motor
+    if(dir1 == "F" ){
+      Serial.print("Direction of the first motor is forward with speed = ");
+      Serial.print(speed);
+      Serial.print("\n");
+      
+      analogWrite(10, speed);
+      digitalWrite(9,HIGH);
+      digitalWrite(8,LOW);
+      //delay(2000);
+ 
+      //to check the direction of the second motor
+      if(dir2 == "F"){
+        Serial.print("Direction of the second motor is forward with speed = ");
+        Serial.print(speed);
+        Serial.print("\n\n");
+      
+        analogWrite(3, speed);
+        digitalWrite(6,HIGH);
+        digitalWrite(5,LOW);
+        delay(2000);
+      }
+      else if(dir2 == "B"){
+        Serial.print("Direction of the second motor is Backward with speed = ");
+        Serial.print(speed);
+        Serial.print("\n\n");
+        analogWrite(3, speed);
+        digitalWrite(6,LOW);
+        digitalWrite(5,HIGH);
+        delay(2000);
+      }
+      else if(dir2 == "S"){
+        Serial.print("Stop motor 2 !!!");
+        Serial.print("\n\n");
+        analogWrite(6, LOW);
+        analogWrite(3, 0);
+      }
+    }
+    
+    //  if user select Backward for the first motor   
+    else if(dir1 == "B") {
+      Serial.print("Direction of the first motor is Backward with speed = ");
+      Serial.print(speed);
+      Serial.print("\n");
+      analogWrite(10, speed);
+      digitalWrite(9,LOW);
+      digitalWrite(8,HIGH);
+      //delay(2000);
+      
+      //to check the direction of the second motor
+      if(dir2 == "F"){
+        Serial.print("Direction of the second motor is forward with speed = ");
+        Serial.print(speed);
+        Serial.print("\n\n");
+      
+        analogWrite(3, speed);
+        digitalWrite(6,HIGH);
+        digitalWrite(5,LOW);
+        delay(2000);
+      }
+      else if(dir2 == "B"){
+        Serial.print("Direction of the second motor is Backward with speed = ");
+        Serial.print(speed);
+        Serial.print("\n\n");
+        analogWrite(3, speed);
+        digitalWrite(6,LOW);
+        digitalWrite(5,HIGH);
+        delay(2000);
+      }
+      else if(dir2 == "S"){
+        Serial.print("Stop motor 2 !!!");
+        Serial.print("\n\n");
+        analogWrite(6, LOW);
+        analogWrite(3, 0);
+      }
+    }
+    
+    // if user want to stop the first motor  
+    else if(dir1 == "S"){
+      Serial.print("Stop motor 1 !!!");
+      Serial.print("\n");
+      analogWrite(9, LOW);
+      analogWrite(10, 0);
+      
+      //to check the direction of the second motor
+      if(dir2 == "F"){
+        Serial.print("Direction of the second motor is forward with speed = ");
+        Serial.print(speed);
+        Serial.print("\n\n");
+      
+        analogWrite(3, speed);
+        digitalWrite(6,HIGH);
+        digitalWrite(5,LOW);
+        delay(2000);
+      }
+      else if(dir2 == "B"){
+        Serial.print("Direction of the second motor is Backward with speed = ");
+        Serial.print(speed);
+        Serial.print("\n\n");
+        analogWrite(3, speed);
+        digitalWrite(6,LOW);
+        digitalWrite(5,HIGH);
+        delay(2000);
+      }
+      else if(dir2 == "S"){
+        Serial.print("Stop motor 2 !!!");
+        Serial.print("\n\n");
+        analogWrite(6, LOW);
+        analogWrite(3, 0);
+      }
+    }
+    
+    // if user select wrong choice for any motor
+    else {
+      Serial.print("Error!! error input direction of one of the motors\n\n"); 
+      analogWrite(10, 0);
+      analogWrite(3, 0);
+    }
+    
+  }
+}

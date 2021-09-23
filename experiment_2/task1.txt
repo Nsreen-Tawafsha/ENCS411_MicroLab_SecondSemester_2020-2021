@@ -1,0 +1,26 @@
+int speed;
+void setup()
+{
+  Serial.begin(9600); 
+  pinMode(9, OUTPUT);
+  delay(1000);
+  Serial.println("Type any speed "); 
+}
+
+void loop()
+{       
+  if(Serial.available()){             // wait for user input
+    speed = Serial.parseInt(); 
+    Serial.print("Speed entered = ");
+    Serial.print(speed);
+    Serial.print("\n");
+    
+    if(speed >= 0 & speed <= 255){
+      analogWrite(9,speed); 
+      Serial.print("Done\n\n");
+    }
+    else{
+      Serial.println("Error! your speed is invalid \n\n");
+    }
+  }
+}
