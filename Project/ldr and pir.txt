@@ -1,0 +1,44 @@
+when the ldr =0 and pir >0 then turn on 
+else turn off
+
+
+//------light intensity control------//    LDR
+//-------------------------------------------------------------- 
+    int val1 = analogRead(LDR);
+  if (val1 > 500) 
+  	{
+    	digitalWrite(13, LOW);
+    Serial.print("Bulb ON = ");
+    Serial.print(val1);
+  	} 
+  else 
+  	{
+    	digitalWrite(13, HIGH);
+     Serial.print("Bulb OFF = ");
+    Serial.print(val1);
+  	}
+
+
+PIR
+
+//--------------------------------------------------------------  
+        //------ light & fan control --------// 
+//--------------------------------------------------------------
+  sen2Value = digitalRead(9);
+  if (sen2Value == 0) 
+  	{
+    	digitalWrite(10, LOW); //npn as switch OFF
+    	digitalWrite(4, HIGH); // Red LED ON,indicating no motion
+    	digitalWrite(3, LOW); //Green LED OFF, since no Motion detected
+    Serial.print("     || NO Motion Detected    " );
+  	}
+ 
+  if (sen2Value == 1) 
+  	{
+    	digitalWrite(10, HIGH);//npn as switch ON
+    delay(3000);
+    	digitalWrite(4, LOW); // RED LED OFF 
+    	digitalWrite(3, HIGH);//GREEN LED ON , indicating motion detected
+     Serial.print(" 	   || Motion Detected!      " );
+  	}
+  delay(300);

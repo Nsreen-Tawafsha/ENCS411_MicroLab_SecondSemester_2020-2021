@@ -1,0 +1,8 @@
+if(automaticMode == 0){
+}
+
+else{
+    Serial.println("\n\n----------------------------------------------");
+    Serial.println("Arduino #2 ;  Manual Mode");
+    Serial.println("----------------------------------------------\n\n");
+  }

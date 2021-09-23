@@ -1,0 +1,27 @@
+//decodes the infrared input
+  if (irrecv.decode(&results)){
+    long int decCode = results.value;
+    Serial.println(results.value);
+    //switch case to use the selected remote control button
+    switch (results.value){
+      case 16582903: //when you press the 1 button (red)
+       Serial.print('a');
+        break;    
+      case 16615543: //when you press the 2 button
+        digitalWrite(2, LOW);    
+        break;
+       case 16599223: //when you press the 3 button (green)
+        digitalWrite(3, HIGH);
+        break;            
+       case 16591063: //when you press the 4 button
+        digitalWrite(3, LOW);
+        break;        
+       case 16623703 : //when you press the 5 button (blue)
+        digitalWrite(4, HIGH);
+        break;        
+       case 16607383: //when you press the 6 button
+        digitalWrite(4, LOW);
+        break;
+    }
+   irrecv.resume(); // Receives the next value from the button you press
+  }

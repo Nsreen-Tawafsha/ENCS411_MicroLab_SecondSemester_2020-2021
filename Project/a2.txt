@@ -1,0 +1,47 @@
+#include <Wire.h> // <-- remove spaces
+
+int arduino_1_Address = 9;
+int switchValue;
+int blueLEDValue = 0;
+int yellowLEDValue = 0;
+int greenLEDValue = 0;
+
+int arduino_2Pin = 6;
+//*************************************************************
+void setup()
+{
+  pinMode(arduino_2Pin, INPUT);
+  
+  Wire.begin(); // join i2c bus 
+  
+  //Begin Serial communication at a baudrate of 9600:
+  Serial.begin(9600);
+}
+//*************************************************************
+void loop()
+{ 
+  // read the switch value:
+  switchValue = digitalRead(arduino_2Pin);
+  Wire.beginTransmission( arduino_1_Address ); // transmit to device #9
+  Wire.write(switchValue); // sends switch value
+  Wire.endTransmission(); // stop transmitting
+  
+  // check the state of the switch. If it is HIGH, we are in Manual Mode:
+  if (switchValue == HIGH ){ // Go to Arduino #2
+    // Start the I2C Bus as arduino #1 on address 9
+    Wire.begin(9);
+    blueLEDValue = Wire.read();
+    // Start the I2C Bus as arduino #1 on address 10
+    Wire.begin(10);
+    yellowLEDValue = Wire.read();
+    // Start the I2C Bus as arduino #1 on address 11
+    Wire.begin(11);
+    greenLEDValue = Wire.read();
+  }
+  else{  // Go to Arduino #1
+    Serial.println("\n\n----------------------------------------------");
+    Serial.println("Arduino #1 ;  Automatic Mode");
+    Serial.println("----------------------------------------------\n\n");
+  }
+  delay(1000); // Delay a little bit to improve simulation performance 
+}
